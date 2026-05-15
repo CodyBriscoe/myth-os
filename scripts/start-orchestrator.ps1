@@ -7,16 +7,23 @@ param(
 . "$PSScriptRoot\common.ps1"
 
 $orchDir = Resolve-WorldPath 'orchestrator'
-if (-not (Test-Path -LiteralPath (Join-Path $orchDir 'server.py'))) {
+$serverPath = Join-Path $orchDir 'server.py'
+if (-not (Test-Path -LiteralPath $serverPath)) {
     Write-Fail "orchestrator\\server.py missing."
     exit 1
 }
 
-$args = @('server.py', '--host', $HostName, '--port', "$Port")
+$args = @($serverPath, '--host', $HostName, '--port', "$Port")
 if ($DbPath) {
     $args += @('--db', $DbPath)
 }
 
 Write-Step "Start orchestrator"
 Write-Host "Open: http://$HostName`:$Port/health"
-python @args
+Push-Location $orchDir
+try {
+    python @args
+}
+finally {
+    Pop-Location
+}
