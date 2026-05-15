@@ -1,0 +1,8 @@
+apps/
+models/
+data/
+logs/
+tmp/
+*.partial
+__pycache__/
+*.pyc

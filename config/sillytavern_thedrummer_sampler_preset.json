@@ -1,0 +1,23 @@
+{
+  "name": "TheDrummer RP Starter",
+  "temperature": 0.9,
+  "top_p": 0.92,
+  "min_p": 0.05,
+  "top_k": 0,
+  "repetition_penalty": 1.08,
+  "frequency_penalty": 0,
+  "presence_penalty": 0,
+  "typical_p": 1,
+  "tfs": 1,
+  "top_a": 0,
+  "epsilon_cutoff": 0,
+  "eta_cutoff": 0,
+  "mirostat_mode": 0,
+  "mirostat_tau": 5,
+  "mirostat_eta": 0.1,
+  "guidance_scale": 1,
+  "max_tokens": 700,
+  "context_size": 8192,
+  "streaming": true,
+  "notes": "Starter values for prose-heavy RP. If output rambles, lower temperature to 0.75-0.82 or max_tokens to 450-550. If output is flat, raise temperature to 0.95."
+}

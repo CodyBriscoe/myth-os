@@ -1,0 +1,131 @@
+{
+  "name": "Starter RP World Info",
+  "description": "Minimal SillyTavern lorebook starter. Replace bracketed values with campaign facts.",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [
+        "campaign premise",
+        "main premise",
+        "story premise"
+      ],
+      "keysecondary": [],
+      "comment": "Campaign premise",
+      "content": "[Replace] One-paragraph campaign pitch. Include genre, central pressure, and what player characters usually do.",
+      "constant": true,
+      "selective": false,
+      "order": 10,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    },
+    "1": {
+      "uid": 1,
+      "key": [
+        "tone",
+        "genre",
+        "rating"
+      ],
+      "keysecondary": [],
+      "comment": "Tone and boundaries",
+      "content": "[Replace] Tone, genre, desired rating, fade-to-black rules, hard limits, and themes to avoid.",
+      "constant": true,
+      "selective": false,
+      "order": 20,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    },
+    "2": {
+      "uid": 2,
+      "key": [
+        "current location",
+        "starting location",
+        "hub"
+      ],
+      "keysecondary": [],
+      "comment": "Starting location",
+      "content": "[Replace] Name, mood, important districts/rooms, local dangers, common sensory details, and what locals know.",
+      "constant": false,
+      "selective": true,
+      "order": 30,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    },
+    "3": {
+      "uid": 3,
+      "key": [
+        "major faction",
+        "faction"
+      ],
+      "keysecondary": [],
+      "comment": "Faction template",
+      "content": "[Replace] Faction name, public purpose, real agenda, resources, enemies, symbols, and what they want from {{user}}.",
+      "constant": false,
+      "selective": true,
+      "order": 40,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    },
+    "4": {
+      "uid": 4,
+      "key": [
+        "secret",
+        "mystery",
+        "truth"
+      ],
+      "keysecondary": [],
+      "comment": "Hidden truth",
+      "content": "[Replace] Hidden campaign truth. Reveal only through clues and consequences. Do not state it plainly unless discovered.",
+      "constant": false,
+      "selective": true,
+      "order": 50,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    },
+    "5": {
+      "uid": 5,
+      "key": [
+        "rules",
+        "resolution",
+        "combat"
+      ],
+      "keysecondary": [],
+      "comment": "Resolution style",
+      "content": "Resolve actions by fiction-first logic. Easy actions succeed. Risky actions succeed with cost, reveal danger, or require a tradeoff. In combat, track position, intent, injuries, cover, resources, and morale.",
+      "constant": true,
+      "selective": false,
+      "order": 60,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    }
+  }
+}
