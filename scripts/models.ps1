@@ -90,7 +90,8 @@ if (-not $downloaded -and $File) {
 }
 
 if ($downloaded) {
-    $ggufs = Get-ChildItem -LiteralPath $OutDir -Filter '*.gguf' -File -ErrorAction SilentlyContinue
+    $ggufs = Get-ChildItem -LiteralPath $OutDir -Filter '*.gguf' -File -ErrorAction SilentlyContinue |
+        Where-Object { $_.Name -notlike '*.partial' -and $_.Length -ge 1MB }
     if ($ggufs.Count -gt 0) {
         Write-Ok "GGUF present:"
         $ggufs | Sort-Object Length -Descending | ForEach-Object {

@@ -1,0 +1,42 @@
+{
+  "name": "TheDrummer RP Starter Variants",
+  "description": "Three copyable sampler variants for SillyTavern roleplay. Start with Balanced, switch by scene need.",
+  "variants": {
+    "balanced": {
+      "temperature": 0.88,
+      "top_p": 0.92,
+      "min_p": 0.05,
+      "top_k": 0,
+      "repetition_penalty": 1.08,
+      "frequency_penalty": 0,
+      "presence_penalty": 0,
+      "typical_p": 1,
+      "max_tokens": 650,
+      "notes": "Default campaign play. Good balance of texture, control, and forward motion."
+    },
+    "cinematic": {
+      "temperature": 0.96,
+      "top_p": 0.94,
+      "min_p": 0.04,
+      "top_k": 0,
+      "repetition_penalty": 1.07,
+      "frequency_penalty": 0,
+      "presence_penalty": 0,
+      "typical_p": 1,
+      "max_tokens": 850,
+      "notes": "Atmospheric scenes, major reveals, emotional confrontations. Watch for overlong prose."
+    },
+    "tight": {
+      "temperature": 0.78,
+      "top_p": 0.9,
+      "min_p": 0.06,
+      "top_k": 0,
+      "repetition_penalty": 1.1,
+      "frequency_penalty": 0,
+      "presence_penalty": 0,
+      "typical_p": 1,
+      "max_tokens": 450,
+      "notes": "Investigation, combat, dialogue-heavy turns, or when model starts rambling."
+    }
+  }
+}

@@ -18,12 +18,13 @@ Image generation is not required for V1. ComfyUI hooks are only placeholders for
 2. Run `scripts\setup-workspace.ps1`.
 3. If model download fails, place a `.gguf` model in `models\llm\`.
 4. If app install fails, put `koboldcpp.exe` in `apps\KoboldCpp\` and clone SillyTavern into `apps\SillyTavern\`.
-5. Start services:
+5. Run `scripts\doctor.ps1` and fix any blocking issue.
+6. Start services:
    - `scripts\start-orchestrator.ps1`
    - `scripts\start-koboldcpp.ps1 -ModelPath models\llm\YOUR_MODEL.gguf`
    - `scripts\start-sillytavern.ps1`
-6. Open SillyTavern, connect to KoboldCpp, import/use assets from `rp_assets\`.
+7. Open SillyTavern, connect to KoboldCpp, import/use assets from `rp_assets\`.
 
 For one-shot background launch after apps/model exist, run `scripts\launch.ps1`.
 
-See `docs\rp-first-run.md` for exact flow.
+See `docs\first-run.md` for exact flow, `docs\rp-first-run.md` for Starter Campaign v1, and `docs\memory-bridge.md` for continuity storage.

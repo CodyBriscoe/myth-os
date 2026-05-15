@@ -1,6 +1,6 @@
 {
-  "name": "TheDrummer RP Starter",
-  "temperature": 0.9,
+  "name": "TheDrummer RP Starter - Balanced",
+  "temperature": 0.88,
   "top_p": 0.92,
   "min_p": 0.05,
   "top_k": 0,
@@ -16,8 +16,8 @@
   "mirostat_tau": 5,
   "mirostat_eta": 0.1,
   "guidance_scale": 1,
-  "max_tokens": 700,
+  "max_tokens": 650,
   "context_size": 8192,
   "streaming": true,
-  "notes": "Starter values for prose-heavy RP. If output rambles, lower temperature to 0.75-0.82 or max_tokens to 450-550. If output is flat, raise temperature to 0.95."
+  "notes": "Balanced default for prose-heavy RP. If output rambles, use tight variant in config/sillytavern_thedrummer_sampler_variants.json. If output is flat, use cinematic variant."
 }

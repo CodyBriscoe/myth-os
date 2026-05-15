@@ -45,21 +45,18 @@ if (-not $SkipSillyTavern) {
 
 if (-not $SkipKoboldCpp) {
     Write-Step "Install/update KoboldCpp executable"
-    $existingExe = Get-FirstExistingPath @(
-        (Join-Path $koboldDir 'koboldcpp.exe'),
-        (Join-Path $koboldDir 'koboldcpp_vulkan.exe'),
-        (Join-Path $koboldDir 'koboldcpp_rocm.exe')
-    )
+    Write-KoboldCppSelectionHelp -KoboldDir $koboldDir
+    $existingExe = (Get-KoboldCppExecutable -KoboldDir $koboldDir)
     if ($existingExe) {
-        $existingInfo = Get-Item -LiteralPath $existingExe
+        $existingInfo = Get-Item -LiteralPath $existingExe.FullName
         if ($existingInfo.Length -lt 1MB) {
-            Write-Warn "Ignoring incomplete KoboldCpp exe: $existingExe"
+            Write-Warn "Ignoring incomplete KoboldCpp exe: $($existingExe.FullName)"
             $existingExe = $null
         }
     }
 
     if ($existingExe -and -not $ForceKoboldDownload) {
-        Write-Ok "KoboldCpp exe exists: $existingExe"
+        Write-Ok "KoboldCpp exe exists: $($existingExe.FullName)"
     }
     else {
         try {

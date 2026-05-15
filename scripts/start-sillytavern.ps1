@@ -6,26 +6,19 @@ if (-not (Test-Path -LiteralPath $sillyDir)) {
     exit 1
 }
 
-$startBat = Get-FirstExistingPath @(
-    (Join-Path $sillyDir 'Start.bat'),
-    (Join-Path $sillyDir 'start.bat')
-)
-
 Write-Step "Start SillyTavern"
-if ($startBat) {
-    & $startBat
-}
-elseif (Test-Path -LiteralPath (Join-Path $sillyDir 'package.json')) {
+$command = Get-SillyTavernLaunchCommand -SillyDir $sillyDir
+if ($command) {
+    Write-Ok "Launch method: $($command.Label)"
     Push-Location $sillyDir
     try {
-        npm install
-        npm start
+        & $command.FilePath @($command.ArgumentList)
     }
     finally {
         Pop-Location
     }
 }
 else {
-    Write-Fail "No Start.bat or package.json found in $sillyDir."
+    Write-Fail "No node_modules/server.js, Start.bat, or package.json found in $sillyDir."
     exit 1
 }

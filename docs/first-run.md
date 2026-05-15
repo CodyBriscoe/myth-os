@@ -41,6 +41,14 @@ Good v1 lane:
 
 ## 3. Launch Services
 
+Before launching, run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\doctor.ps1
+```
+
+If the model is still downloading, doctor should fail only on the missing usable `.gguf`.
+
 Use three terminals for easiest troubleshooting:
 
 ```powershell
@@ -80,6 +88,13 @@ In SillyTavern:
 - Import `rp_assets\sillytavern\lorebook_world_info_starter.json` as World Info.
 - Pick one author note from `rp_assets\sillytavern\author_notes.md`.
 
+For fastest play, use Starter Campaign v1 instead:
+
+- Import `rp_assets\sillytavern\starter_campaign_v1_gm_card.json`.
+- Import `rp_assets\sillytavern\starter_campaign_v1_lorebook_world_info.json`.
+- Optional focused NPC: `rp_assets\sillytavern\starter_campaign_v1_mara_voss_card.json`.
+- Paste "Starter Campaign v1 Note" from `author_notes.md`.
+
 ## 5. Start Playing
 
 Fast opening prompt:
@@ -89,5 +104,7 @@ I want grounded, consequence-driven RP. My character is [name], a [role] who wan
 ```
 
 During play, use `rp_assets\sillytavern\summary_memory_prompts.md` to compress old scenes into summaries. Optional: POST summaries/events to `http://127.0.0.1:8001` for local continuity storage.
+
+See `docs\memory-bridge.md` for copy-paste memory commands.
 
 Image generation is not part of V1. Scene visual cues can be stored for later ComfyUI integration.

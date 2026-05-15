@@ -1,0 +1,178 @@
+{
+  "name": "Starter Campaign v1 - Ashwake Crossing",
+  "description": "Concrete play-ready SillyTavern lorebook for a grounded occult frontier mystery campaign.",
+  "entries": {
+    "0": {
+      "uid": 0,
+      "key": [
+        "Ashwake Crossing",
+        "campaign premise",
+        "main premise"
+      ],
+      "keysecondary": [],
+      "comment": "Campaign premise",
+      "content": "Ashwake Crossing is a rain-soaked river town built around a collapsed rail bridge, a failing coal yard, and a ferry route everyone needs. People have started vanishing during foghorn blackouts. The campaign follows {{user}} as they navigate debts, factions, clues, and supernatural pressure tied to an old signal under the river.",
+      "constant": true,
+      "selective": false,
+      "order": 10,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    },
+    "1": {
+      "uid": 1,
+      "key": [
+        "tone",
+        "genre",
+        "rating",
+        "boundaries"
+      ],
+      "keysecondary": [],
+      "comment": "Tone and boundaries",
+      "content": "Tone is grounded occult mystery with frontier noir pressure: wet wool, coal smoke, bruised loyalties, bad bargains, and practical danger. Keep horror suggestive rather than graphic unless the user asks otherwise. Do not use sexual violence as plot texture. Respect user limits immediately.",
+      "constant": true,
+      "selective": false,
+      "order": 20,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    },
+    "2": {
+      "uid": 2,
+      "key": [
+        "Ferry Lantern Inn",
+        "starting location",
+        "inn",
+        "hub"
+      ],
+      "keysecondary": [],
+      "comment": "Starting hub",
+      "content": "The Ferry Lantern Inn sits above the south dock, warm but never quiet. Regulars include ferrymen, union hands, informants, debt collectors, and travelers stranded by fog. Its owner, Mara Voss, keeps a ledger of favors behind the bar. The floorboards remember more secrets than the patrons.",
+      "constant": false,
+      "selective": true,
+      "order": 30,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    },
+    "3": {
+      "uid": 3,
+      "key": [
+        "Iron Choir",
+        "major faction",
+        "faction"
+      ],
+      "keysecondary": [],
+      "comment": "Industrial faction",
+      "content": "The Iron Choir is the rail company security arm. Publicly it protects workers and cargo. Privately it suppresses strike organizers, buys silence, and searches for pre-collapse engineering records. Its symbol is a black tuning fork stamped on brass. The Choir wants {{user}} useful, indebted, or gone.",
+      "constant": false,
+      "selective": true,
+      "order": 40,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    },
+    "4": {
+      "uid": 4,
+      "key": [
+        "River Saints",
+        "saints",
+        "dock shrine"
+      ],
+      "keysecondary": [],
+      "comment": "Local faith network",
+      "content": "The River Saints are a loose shrine network of widows, boat hands, midwives, and old families. They leave blue glass beads on doors after drownings. They know which missing people were taken by ordinary violence and which disappeared during the signal. They do not trust outsiders with sacred names.",
+      "constant": false,
+      "selective": true,
+      "order": 50,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    },
+    "5": {
+      "uid": 5,
+      "key": [
+        "Leviathan signal",
+        "signal",
+        "foghorn",
+        "blackout"
+      ],
+      "keysecondary": [],
+      "comment": "Hidden supernatural pressure",
+      "content": "The Leviathan signal is an impossible tone heard under certain foghorn blackouts. It causes lost time, nosebleeds, shared dreams of dark water, and compulsions to open locked doors near the river. Do not reveal its full source early. Show it through clocks stopping, animals fleeing, witnesses contradicting themselves, and water moving against current.",
+      "constant": false,
+      "selective": true,
+      "order": 60,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    },
+    "6": {
+      "uid": 6,
+      "key": [
+        "Mara Voss",
+        "Mara",
+        "innkeeper"
+      ],
+      "keysecondary": [],
+      "comment": "Key NPC",
+      "content": "Mara Voss owns the Ferry Lantern Inn. She is dry-witted, observant, and protective of people who cannot protect themselves. She trades in favors and keeps two ledgers: one legal, one dangerous. Her younger brother Ewan vanished during a foghorn blackout three nights ago.",
+      "constant": false,
+      "selective": true,
+      "order": 70,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    },
+    "7": {
+      "uid": 7,
+      "key": [
+        "rules",
+        "resolution",
+        "combat",
+        "investigation"
+      ],
+      "keysecondary": [],
+      "comment": "Resolution style",
+      "content": "Resolve actions by fiction-first logic. Easy actions succeed. Risky actions succeed with cost, reveal danger, or require a tradeoff. Investigation should produce concrete clues, not instant answers. In conflict, track position, intent, injuries, cover, resources, and morale.",
+      "constant": true,
+      "selective": false,
+      "order": 80,
+      "position": 0,
+      "disable": false,
+      "addMemo": true,
+      "excludeRecursion": false,
+      "probability": 100,
+      "useProbability": false,
+      "depth": 4
+    }
+  }
+}

@@ -4,7 +4,10 @@ param(
     [int]$SillyPort = $(if ($env:WB_SILLY_PORT) { [int]$env:WB_SILLY_PORT } else { 8000 }),
     [int]$OrchestratorPort = $(if ($env:WB_ORCH_PORT) { [int]$env:WB_ORCH_PORT } else { 8001 }),
     [switch]$SkipChecks,
-    [switch]$NoVulkan
+    [switch]$NoVulkan,
+    [ValidateSet('auto', 'vulkan', 'cuda', 'rocm', 'cpu')]
+    [string]$KoboldFlavor = $(if ($env:WB_KOBOLDCPP_FLAVOR) { $env:WB_KOBOLDCPP_FLAVOR } else { 'auto' }),
+    [int]$ReadyTimeoutSeconds = 90
 )
 
 . "$PSScriptRoot\common.ps1"
@@ -29,31 +32,30 @@ if (-not $SkipChecks) {
 
 if (-not $ModelPath) {
     $modelDir = Resolve-WorldPath 'models\llm'
-    $model = Get-ChildItem -LiteralPath $modelDir -Filter '*.gguf' -File -ErrorAction SilentlyContinue |
-        Sort-Object Length -Descending |
-        Select-Object -First 1
+    $model = Get-ModelCandidate -ModelDir $modelDir
     if ($model) {
         $ModelPath = $model.FullName
     }
 }
 
-if (-not $ModelPath -or -not (Test-Path -LiteralPath $ModelPath)) {
-    Write-Fail "No GGUF model found. Run scripts\\models.ps1 or set WB_MODEL_PATH."
+$modelInfo = Get-ModelCandidate -ModelPath $ModelPath
+if (-not $modelInfo) {
+    Write-Fail "No usable GGUF model found. Ignores .partial and files under 1 MB. Run scripts\\models.ps1 or set WB_MODEL_PATH."
     exit 1
 }
+$ModelPath = $modelInfo.FullName
+Write-Ok "Model: $ModelPath ($([math]::Round($modelInfo.Length / 1GB, 2)) GB)"
 
 Write-Step "Launch KoboldCpp"
-$koboldExe = Get-FirstExistingPath @(
-    (Join-Path $koboldDir 'koboldcpp.exe'),
-    (Join-Path $koboldDir 'koboldcpp_cu12.exe'),
-    (Join-Path $koboldDir 'koboldcpp_rocm.exe'),
-    (Join-Path $koboldDir 'koboldcpp_vulkan.exe')
-)
+$koboldExe = Get-KoboldCppExecutable -KoboldDir $koboldDir -Flavor $KoboldFlavor
 
 if (-not $koboldExe) {
-    Write-Fail "KoboldCpp exe missing in $koboldDir. Place Windows KoboldCpp build there."
+    Write-KoboldCppSelectionHelp -KoboldDir $koboldDir -Flavor $KoboldFlavor
+    Write-Fail "KoboldCpp exe missing or too small in $koboldDir. Place Windows KoboldCpp build there."
     exit 1
 }
+Write-KoboldCppSelectionHelp -KoboldDir $koboldDir -Flavor $KoboldFlavor
+Write-Ok "KoboldCpp exe: $($koboldExe.FullName)"
 
 $koboldArgs = @(
     '--model', $ModelPath,
@@ -67,7 +69,7 @@ if (-not $NoVulkan) {
 
 $kobold = Start-LoggedProcess `
     -Name 'KoboldCpp' `
-    -FilePath $koboldExe `
+    -FilePath $koboldExe.FullName `
     -ArgumentList $koboldArgs `
     -WorkingDirectory $koboldDir `
     -LogPath (Join-Path $logDir 'koboldcpp.log')
@@ -78,28 +80,18 @@ if (-not (Test-Path -LiteralPath $sillyDir)) {
     exit 1
 }
 
-$sillyStart = Get-FirstExistingPath @(
-    (Join-Path $sillyDir 'Start.bat'),
-    (Join-Path $sillyDir 'start.bat')
-)
-
-if ($sillyStart) {
+$sillyCommand = Get-SillyTavernLaunchCommand -SillyDir $sillyDir
+if ($sillyCommand) {
+    Write-Ok "SillyTavern launch: $($sillyCommand.Label)"
     $silly = Start-LoggedProcess `
         -Name 'SillyTavern' `
-        -FilePath $sillyStart `
-        -WorkingDirectory $sillyDir `
-        -LogPath (Join-Path $logDir 'sillytavern.log')
-}
-elseif (Test-Path -LiteralPath (Join-Path $sillyDir 'package.json')) {
-    $silly = Start-LoggedProcess `
-        -Name 'SillyTavern' `
-        -FilePath 'cmd.exe' `
-        -ArgumentList @('/c', 'npm', 'start') `
+        -FilePath $sillyCommand.FilePath `
+        -ArgumentList $sillyCommand.ArgumentList `
         -WorkingDirectory $sillyDir `
         -LogPath (Join-Path $logDir 'sillytavern.log')
 }
 else {
-    Write-Warn "SillyTavern not installed or no Start.bat/package.json found in $sillyDir."
+    Write-Warn "SillyTavern not installed or no node_modules/server.js, Start.bat, or package.json found in $sillyDir."
 }
 
 Write-Step "Launch orchestrator"
@@ -124,5 +116,16 @@ Write-Host "PIDs started this run:"
 foreach ($proc in @($kobold, $silly, $orch)) {
     if ($proc) {
         Write-Host "  $($proc.ProcessName) pid=$($proc.Id)"
+    }
+}
+
+if (-not $SkipChecks) {
+    Write-Step "Wait for readiness"
+    Wait-HttpReady -Name 'KoboldCpp' -Url "http://127.0.0.1:$KoboldPort" -TimeoutSeconds $ReadyTimeoutSeconds | Out-Null
+    if ($silly) {
+        Wait-HttpReady -Name 'SillyTavern' -Url "http://127.0.0.1:$SillyPort" -TimeoutSeconds $ReadyTimeoutSeconds | Out-Null
+    }
+    if ($orch) {
+        Wait-HttpReady -Name 'Orchestrator' -Url "http://127.0.0.1:$OrchestratorPort/health" -TimeoutSeconds $ReadyTimeoutSeconds | Out-Null
     }
 }
